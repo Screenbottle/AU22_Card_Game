@@ -4,6 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C5C5C5"
+    android:foregroundTint="#FFFFFF"
     tools:context=".RoundActivity">
 
+    <ImageView
+        android:id="@+id/cardViewBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardViewFront"
+        app:layout_constraintStart_toStartOf="@+id/cardViewFront"
+        app:srcCompat="@drawable/spades_a" />
+
+    <ImageView
+        android:id="@+id/cardViewFront"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:srcCompat="@drawable/spades_a" />
+
+    <ImageButton
+        android:id="@+id/cardLeftButton"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:backgroundTint="#35B307"
+        android:contentDescription="@string/cardLeftButton"
+        app:tint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.318"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <ImageButton
+        android:id="@+id/cardRightButton"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:backgroundTint="#35B307"
+        android:contentDescription="@string/cardLeftButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.318"
+        app:srcCompat="?attr/actionModeCloseDrawable"
+        app:tint="#000000" />
+
+    <TextView
+        android:id="@+id/pointView"
+        android:layout_width="288dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="16dp"
+        android:background="#A8A8A8"
+        android:text="@string/points"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewFront" />
+
+    <Button
+        android:id="@+id/hitButton"
+        android:layout_width="100dp"
+        android:layout_height="55dp"
+        android:text="@string/takeCard"
+        app:layout_constraintBaseline_toBaselineOf="@+id/standButton"
+        app:layout_constraintEnd_toStartOf="@+id/standButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/standButton"
+        android:layout_width="100dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="156dp"
+        android:text="@string/stopCard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.76"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/dealerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dealerCards"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pointView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
