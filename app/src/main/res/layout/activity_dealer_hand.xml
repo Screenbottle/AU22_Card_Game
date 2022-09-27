@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5C5C5"
-    android:foregroundTint="#FFFFFF"
-    tools:context=".RoundActivity">
+    tools:context=".DealerHandActivity">
 
     <ImageView
         android:id="@+id/cardViewBack"
@@ -16,7 +14,7 @@
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/cardViewFront"
         app:layout_constraintStart_toStartOf="@+id/cardViewFront"
-        app:srcCompat="@drawable/spades_a" />
+        app:srcCompat="@drawable/peter_river" />
 
     <ImageView
         android:id="@+id/cardViewFront"
@@ -63,40 +61,21 @@
         android:layout_marginTop="28dp"
         android:background="#A8A8A8"
         android:text="@string/points"
+        android:textColor="#4E342E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardViewFront" />
 
     <Button
-        android:id="@+id/hitButton"
-        android:layout_width="100dp"
-        android:layout_height="55dp"
-        android:text="@string/takeCard"
-        app:layout_constraintBaseline_toBaselineOf="@+id/standButton"
-        app:layout_constraintEnd_toStartOf="@+id/standButton"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/standButton"
-        android:layout_width="100dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/stopCard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.762"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pointView" />
-
-    <Button
         android:id="@+id/dealerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/dealerCards"
-        android:textColor="#D7CCC8"
+        android:text="@string/return_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/standButton" />
+        app:layout_constraintTop_toBottomOf="@+id/pointView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

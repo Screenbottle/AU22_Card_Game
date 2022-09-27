@@ -1,9 +1,9 @@
 package com.example.au22_card_game
 
-class playingCard (
+class PlayingCard (
     val imageID : Int,
     val name : String,
-    val value : Int,
+    var value : Int,
     val suite : String
 ){
 
