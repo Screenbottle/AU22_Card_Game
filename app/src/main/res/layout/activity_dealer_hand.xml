@@ -7,6 +7,16 @@
     tools:context=".DealerHandActivity">
 
     <ImageView
+        android:id="@+id/dealerBackgroundView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/greenbackground" />
+
+    <ImageView
         android:id="@+id/cardViewBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,11 +81,12 @@
         android:id="@+id/dealerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/return_button"
+        android:text="@string/returnButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pointView" />
+        app:layout_constraintTop_toBottomOf="@+id/pointView"
+        app:layout_constraintVertical_bias="0.19999999" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

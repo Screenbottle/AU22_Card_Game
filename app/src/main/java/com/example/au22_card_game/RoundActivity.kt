@@ -3,6 +3,7 @@ package com.example.au22_card_game
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -61,7 +62,7 @@ class RoundActivity : AppCompatActivity() {
 
         dealerButton.setOnClickListener {
             val intent = Intent(this, DealerHandActivity::class.java)
-            intent.putExtra("status", "show")
+            intent.putExtra(ROUND_STATUS_KEY, false)
 
             startActivity(intent)
         }
@@ -75,7 +76,7 @@ class RoundActivity : AppCompatActivity() {
         val rightButton = findViewById<ImageButton>(R.id.cardRightButton)
 
         rightButton.setOnClickListener {
-            setCardView(("right"))
+            setCardView("right")
         }
 
         playerPointUpdate(playerHand)
@@ -85,16 +86,22 @@ class RoundActivity : AppCompatActivity() {
         setCardView()
 
         if (playerHand.points == 21 && dealerHand.points != 21) {
-            //todo
-            //player wins
+            GameState.playerWin()
+            hitButton.visibility = View.INVISIBLE
+            standButton.visibility = View.INVISIBLE
+            dealerButton.setText(R.string.roundResultButton)
         }
         else if (playerHand.points == 21 && dealerHand.points == 21) {
-            //todo
-            //stand off (tie)
+            GameState.playerTie()
+            hitButton.visibility = View.INVISIBLE
+            standButton.visibility = View.INVISIBLE
+            dealerButton.setText(R.string.roundResultButton)
         }
         else if (dealerHand.points == 21) {
-            //todo
-            //house wins
+            GameState.playerLoss()
+            hitButton.visibility = View.INVISIBLE
+            standButton.visibility = View.INVISIBLE
+            dealerButton.setText(R.string.roundResultButton)
         }
     }
 
@@ -112,16 +119,13 @@ class RoundActivity : AppCompatActivity() {
         }
 
         if (dealerHand.points <= 21 && dealerHand.points < playerHand.points && playerHand.points <= 21) {
-            //todo
-            //player wins
+            GameState.playerWin()
         }
         else if (dealerHand.points <= 21 && dealerHand.points == playerHand.points) {
-            //todo
-            //stand off (tie)
+            GameState.playerTie()
         }
         else if (dealerHand.points <= 21 && (playerHand.points < dealerHand.points || playerHand.points > 21)) {
-            //todo
-            //house wins
+            GameState.playerLoss()
         }
 
     }

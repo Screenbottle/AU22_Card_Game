@@ -4,9 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5C5C5"
+    android:animateLayoutChanges="false"
+    android:background="#01511F"
     android:foregroundTint="#FFFFFF"
     tools:context=".RoundActivity">
+
+    <ImageView
+        android:id="@+id/roundBackgroundView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/greenbackground" />
 
     <ImageView
         android:id="@+id/cardViewBack"
@@ -36,12 +47,12 @@
         android:layout_height="90dp"
         android:backgroundTint="#35B307"
         android:contentDescription="@string/cardLeftButton"
-        app:tint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.318"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+        app:srcCompat="?attr/actionModeCloseDrawable"
+        app:tint="#000000" />
 
     <ImageButton
         android:id="@+id/cardRightButton"
@@ -72,7 +83,7 @@
         android:id="@+id/hitButton"
         android:layout_width="100dp"
         android:layout_height="55dp"
-        android:text="@string/takeCard"
+        android:text="@string/takeCardButton"
         app:layout_constraintBaseline_toBaselineOf="@+id/standButton"
         app:layout_constraintEnd_toStartOf="@+id/standButton"
         app:layout_constraintStart_toStartOf="parent" />
@@ -82,7 +93,7 @@
         android:layout_width="100dp"
         android:layout_height="55dp"
         android:layout_marginTop="16dp"
-        android:text="@string/stopCard"
+        android:text="@string/stopCardButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.762"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,10 +104,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="@string/dealerCards"
+        android:text="@string/dealerCardsButton"
         android:textColor="#D7CCC8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/standButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

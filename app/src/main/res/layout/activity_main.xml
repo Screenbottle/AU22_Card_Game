@@ -6,13 +6,75 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/mainBackgroundView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:contentDescription="@string/backGroundName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/greenbackground" />
+
+    <ImageView
+        android:id="@+id/mainForegroundView"
+        android:layout_width="0dp"
+        android:layout_height="413dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mainicon" />
+
+    <ImageView
+        android:id="@+id/mainChipView"
+        android:layout_width="123dp"
+        android:layout_height="107dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/poker_chip" />
+
+    <TextView
+        android:id="@+id/playerCashView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/points"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mainChipView"
+        app:layout_constraintStart_toEndOf="@+id/mainChipView" />
+
+    <Button
+        android:id="@+id/startRoundButton"
+        android:layout_width="150dp"
+        android:layout_height="63dp"
+        android:text="@string/startRoundButton"
+        android:textColor="#AED581"
+        app:layout_constraintBottom_toTopOf="@+id/playerCashView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerBet"
+        app:layout_constraintVertical_bias="0.26" />
+
+    <EditText
+        android:id="@+id/playerBet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/betEditTextHint"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textAlignment="center"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainForegroundView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

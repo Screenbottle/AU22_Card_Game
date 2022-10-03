@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">AU22_Card_Game</string>
-    <string name="user_greeting">Hello %1$s</string>
+    <string name="startRoundButton">Begin Round</string>
     <string name="cardLeftButton">Left Button</string>
     <string name="cardRightButton">Right Button</string>
-    <string name="points">Points: %1$d</string>
-    <string name="takeCard">Hit</string>
-    <string name="stopCard">Stand</string>
-    <string name="dealerCards">Dealer\'s Hand</string>
-    <string name="return_button">Return</string>
+    <string name="takeCardButton">Hit</string>
+    <string name="stopCardButton">Stand</string>
+    <string name="dealerCardsButton">Dealer\'s Hand</string>
+    <string name="returnButton">Return</string>
     <string name="resultButton">See round result</string>
+    <string name="betEditTextHint">Make your bet </string>
+    <string name="points">Cash: %1$d</string>
+    <string name="backGroundName">Background Image</string>
+    <string name="roundResultButton">Finish Round</string>
 </resources>
