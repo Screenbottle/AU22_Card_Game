@@ -9,7 +9,16 @@
     <string name="returnButton">Return</string>
     <string name="resultButton">See round result</string>
     <string name="betEditTextHint">Make your bet </string>
-    <string name="points">Cash: %1$d</string>
+    <string name="cash">Cash: %1$s</string>
+    <string name="points">Points: %1$s</string>
     <string name="backGroundName">Background Image</string>
     <string name="roundResultButton">Finish Round</string>
+    <string name="winText">You win the round!</string>
+    <string name="lossText">You lose the round!</string>
+    <string name="tieText">The round is a tie!</string>
+    <string name="betText">You bet %1$s $</string>
+    <string name="rewardText">Your payout is %1$s $</string>
+    <string name="tieRewardText">You get your bet back!</string>
+    <string name="lossRewardText">You lose your bet!</string>
+    <string name="placeholder">Placeholder</string>
 </resources>

@@ -12,14 +12,15 @@ import android.widget.Toast
 class MainActivity : AppCompatActivity() {
 
     private lateinit var playerBetView: EditText
+    private lateinit var playerCashView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("!!!", "startas ok")
 
         val startRoundButton = findViewById<Button>(R.id.startRoundButton)
-        val playerCashView = findViewById<TextView>(R.id.playerCashView)
-        playerCashView.text = String.format(getString(R.string.points), GameState.playerChips)
+        playerCashView = findViewById(R.id.playerCashView)
+        playerCashView.text = String.format(getString(R.string.cash), "${GameState.playerChips}")
 
         playerBetView = findViewById(R.id.playerBet)
 
@@ -30,31 +31,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun startButtonPressed() {
         val playerBetText = playerBetView.text.toString()
-        val playerBet = playerBetText.toIntOrNull()
+        val playerBet = playerBetText.toDoubleOrNull()
 
+        //checks if the player has given a valid input, displays error message toasts if that is not the case
         if (playerBet != null) {
-            if ((playerBet < GameState.playerChips) && (playerBet > 0)) {
+            if ((playerBet < GameState.playerChips) && (playerBet > 0.0)) {
                 GameState.playerBet = playerBet
 
                 val intent = Intent(this, RoundActivity::class.java)
                 startActivity(intent)
             }
-            else if (playerBet < 0) {
-                Toast.makeText(applicationContext, "Error: Invalid Bet", Toast.LENGTH_LONG).show()
+            else if (playerBet < 5) {
+                Toast.makeText(this, "Error: You must bet 5$ or more", Toast.LENGTH_LONG).show()
             }
             else {
-                Toast.makeText(applicationContext,"Error: Not Enough Chips", Toast.LENGTH_LONG).show()
+                Toast.makeText(this,"Error: Not Enough Chips", Toast.LENGTH_LONG).show()
 
             }
         }
         else{
-            Toast.makeText(applicationContext,"Error: No Bet Made", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,"Error: No Bet Made", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        playerBetView.setText(R.string.betEditTextHint)
-        GameState.playerBet = 0
+        playerBetView.setHint(R.string.betEditTextHint)
+        playerBetView.text = null
+        GameState.playerBet = 0.0
+        playerCashView.text = String.format(getString(R.string.cash), "${GameState.playerChips}")
     }
 }

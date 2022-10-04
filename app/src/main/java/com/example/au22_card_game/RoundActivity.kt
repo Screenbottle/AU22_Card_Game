@@ -3,18 +3,22 @@ package com.example.au22_card_game
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.au22_card_game.GameState.dealerHand
 
 class RoundActivity : AppCompatActivity() {
 
     private lateinit var cardDeck : MutableList<PlayingCard>
     private val playerHand = Player()
-
+    private lateinit var hitButton: Button
+    private lateinit var standButton: Button
+    private lateinit var dealerButton: Button
+    private lateinit var cardViewBack: ImageView
+    private lateinit var cardViewFront: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +26,10 @@ class RoundActivity : AppCompatActivity() {
 
         val playerCount = 1
 
-        val handList = arrayOf(playerHand, dealerHand)
+        val handList = arrayOf(playerHand, GameState.dealerHand)
 
         makeDeck()
+        GameState.newRound()
 
         for (i in 1..2) {
             for (j in 0..playerCount) {
@@ -33,37 +38,40 @@ class RoundActivity : AppCompatActivity() {
             }
         }
 
-        val hitButton = findViewById<Button>(R.id.hitButton)
+        cardViewBack = findViewById(R.id.cardViewBack)
+        cardViewFront = findViewById(R.id.cardViewFront)
+
+        hitButton = findViewById(R.id.hitButton)
+        standButton = findViewById(R.id.standButton)
+        dealerButton = findViewById(R.id.dealerButton)
 
         hitButton.setOnClickListener {
 
             playerHand.handOfCards.add(drawCard())
-            playerPointUpdate(playerHand)
+            playerHand.pointUpdate()
 
             setCardView()
 
             if (playerHand.points > 21) {
-                //todo
-                //lose round
+                GameState.playerLoss()
+                dealerPlay()
+                roundOver()
+                dealerButton.setText(R.string.roundResultButton)
             }
             else if (playerHand.points == 21) {
                 //go to dealers play
                 dealerPlay()
+                roundOver()
             }
         }
 
-        val standButton = findViewById<Button>(R.id.standButton)
-
         standButton.setOnClickListener {
+            roundOver()
             dealerPlay()
         }
 
-        val dealerButton = findViewById<Button>(R.id.dealerButton)
-
         dealerButton.setOnClickListener {
             val intent = Intent(this, DealerHandActivity::class.java)
-            intent.putExtra(ROUND_STATUS_KEY, false)
-
             startActivity(intent)
         }
 
@@ -79,29 +87,33 @@ class RoundActivity : AppCompatActivity() {
             setCardView("right")
         }
 
-        playerPointUpdate(playerHand)
-        playerPointUpdate(dealerHand)
+        playerHand.pointUpdate()
+        GameState.dealerHand.pointUpdate()
 
 
         setCardView()
-
-        if (playerHand.points == 21 && dealerHand.points != 21) {
+        //checks if either the player and/or the house has a Blackjack
+        //if neither does, it proceeds as normal
+        if (playerHand.points == 21 && GameState.dealerHand.points != 21) {
             GameState.playerWin()
-            hitButton.visibility = View.INVISIBLE
-            standButton.visibility = View.INVISIBLE
-            dealerButton.setText(R.string.roundResultButton)
+            GameState.playerBetReturn = 1.5
+            roundOver()
         }
-        else if (playerHand.points == 21 && dealerHand.points == 21) {
+        else if (playerHand.points == 21 && GameState.dealerHand.points == 21) {
             GameState.playerTie()
-            hitButton.visibility = View.INVISIBLE
-            standButton.visibility = View.INVISIBLE
-            dealerButton.setText(R.string.roundResultButton)
+            roundOver()
         }
-        else if (dealerHand.points == 21) {
+        else if (GameState.dealerHand.points == 21) {
             GameState.playerLoss()
-            hitButton.visibility = View.INVISIBLE
-            standButton.visibility = View.INVISIBLE
-            dealerButton.setText(R.string.roundResultButton)
+            roundOver()
+        }
+        else {
+            dealerButton.setOnClickListener {
+                val intent = Intent(this, DealerHandActivity::class.java)
+                intent.putExtra(ROUND_STATUS_KEY, false)
+
+                startActivity(intent)
+            }
         }
     }
 
@@ -111,54 +123,44 @@ class RoundActivity : AppCompatActivity() {
         return cardDeck.removeAt(randomCard)
     }
 
-    private fun dealerPlay() {
+    private fun roundOver() {
+        //when the round is over, hides the hit and stand buttons, and changes the dealerButton listener
+        hitButton.visibility = View.INVISIBLE
+        standButton.visibility = View.INVISIBLE
 
-        while (dealerHand.points < 17) {
-            dealerHand.handOfCards.add(drawCard())
-            playerPointUpdate(dealerHand)
-        }
-
-        if (dealerHand.points <= 21 && dealerHand.points < playerHand.points && playerHand.points <= 21) {
-            GameState.playerWin()
-        }
-        else if (dealerHand.points <= 21 && dealerHand.points == playerHand.points) {
-            GameState.playerTie()
-        }
-        else if (dealerHand.points <= 21 && (playerHand.points < dealerHand.points || playerHand.points > 21)) {
-            GameState.playerLoss()
+        dealerButton.setText(R.string.roundResultButton)
+        dealerButton.setOnClickListener {
+            val intent = Intent(this, DealerHandActivity::class.java)
+            intent.putExtra(ROUND_STATUS_KEY, true)
+            startActivity(intent)
         }
 
     }
 
-    private fun playerPointUpdate(player : Player) {
-        //calculates the players current point total, and checks for aces
-        player.points = 0
-        var hasAce = false
-        for (card in player.handOfCards) {
-            player.points += card.value
-            if (card.value == 11) {
-                hasAce = true
-            }
+    private fun dealerPlay() {
+
+        while (GameState.dealerHand.points < 17) {
+            GameState.dealerHand.handOfCards.add(drawCard())
+            GameState.dealerHand.pointUpdate()
         }
-        if(hasAce && player.points > 21) {
-            player.points = 0
-            for (card in player.handOfCards) {
-                if (card.value == 11) {
-                    card.value = 1
-                    player.points += card.value
-                }
-                else {
-                    player.points += card.value
-                }
-            }
+
+        if (((GameState.dealerHand.points < 21 && GameState.dealerHand.points < playerHand.points) || GameState.dealerHand.points > 21) && playerHand.points <= 21) {
+            GameState.playerWin()
+            GameState.playerBetReturn = 1.0
         }
+        else if (GameState.dealerHand.points <= 21 && GameState.dealerHand.points == playerHand.points) {
+            GameState.playerTie()
+        }
+        else if ((GameState.dealerHand.points <= 21 && playerHand.points < GameState.dealerHand.points) || playerHand.points > 21) {
+            GameState.playerLoss()
+        }
+
+        Log.d("!!!", "dealer points: ${GameState.dealerHand.points}")
+
     }
 
     private fun setCardView(direction : String? = null) {
         //one function for all changes in card views
-
-        val cardViewBack = findViewById<ImageView>(R.id.cardViewBack)
-        val cardViewFront = findViewById<ImageView>(R.id.cardViewFront)
 
         when (direction) {
             "left" -> {
@@ -203,7 +205,7 @@ class RoundActivity : AppCompatActivity() {
 
                 val pointView = findViewById<TextView>(R.id.pointView)
 
-                pointView.text = getString(R.string.points, playerHand.points)
+                pointView.text = String.format(getString(R.string.points), "${playerHand.points}")
 
             }
         }
@@ -216,8 +218,9 @@ class RoundActivity : AppCompatActivity() {
         val courtList = listOf("a", "j", "q", "k")
         val courtValue = listOf(11, 10)
 
+        //nested for loops to dynamically generate each card and add them to the deck, avoids hardcoding each card
         var drawableId : Int
-        for (i in 0..3) {
+        for (i in suiteList.indices) {
             for (j in 0..12) {
                 if (j == 0) {
                     drawableId = this.resources.getIdentifier("${suiteList[i]}_${courtList[0]}", "drawable", this.packageName)
@@ -238,4 +241,10 @@ class RoundActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        if (GameState.roundStatus == "OVER") {
+            finish()
+        }
+        super.onResume()
+    }
 }
